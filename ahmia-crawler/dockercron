@@ -1,0 +1,6 @@
+# Every 4 hours
+PATH=/usr/local/bin:/usr/bin:/bin:/root/.local/bin
+0 */4 * * * cd /root/codes/ && bash run.sh > ./4hours.log 2>&1
+# Every 8 hours
+PATH=/usr/local/bin:/usr/bin:/bin:/root/.local/bin
+0 */6 * * * cd /root/codes/ && bash run_daily.sh > ./8hours.log 2>&1
