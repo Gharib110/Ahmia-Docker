@@ -1,0 +1,18 @@
+forward-socks5t / 127.0.0.1:9051 .
+listen-address 127.0.0.1:9055
+forward-socks5t / 127.0.0.1:9052 .
+listen-address 127.0.0.1:9056
+toggle  1
+enable-remote-toggle  0
+enable-remote-http-toggle  0
+enable-edit-actions 0
+enforce-blocks 0
+buffer-limit 4096
+enable-proxy-authentication-forwarding 0
+forwarded-connect-retries  0
+accept-intercepted-requests 0
+allow-cgi-request-crunching 0
+split-large-forms 0
+keep-alive-timeout 5
+tolerate-pipelining 1
+socket-timeout 300
