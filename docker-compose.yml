@@ -2,7 +2,28 @@
 version: '3.2'
 
 services:
-  
+  ahmia-index:
+    container_name: "ahmia-index"
+    image: dapperblondie/ahmia-index:2.0
+    depends_on:
+      - elasticsearch1
+
+  ahmia-crawler:
+    container_name: "ahmia-crawler"
+    image: dapperblondie/ahmia-crawler:2.0
+    depends_on:
+      - ahmia-index
+      - tor-privoxy-web
+      - tor-privoxy0
+      - tor-privoxy1
+      - tor-privoxy2
+      - tor-privoxy3
+      - tor-privoxy4
+      - tor-privoxy5
+      - tor-privoxy6
+      - tor-privoxy7
+      - tor-privoxy8
+      - tor-privoxy9
   elasticsearch1:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.14
     restart: always
@@ -109,7 +130,7 @@ services:
     image: dapperblondie/darkweb-search-engine-tor-privoxy-web
     ports:
       # - "9050:9050" # Tor proxy
-      - "3101:8100" # Privoxy
+      - "127.0.0.1:3101:8100" # Privoxy
     container_name: "ahmia-search-engine-tor-privoxy-web"
 
 
