@@ -1,14 +1,5 @@
 #!/bin/bash
 
-# If the environment file does not exist, create it based on example.env
-if [ ! -f .env ]; then
-    echo "File .env not found, copying from example.env"
-    cp example.env .env
-fi
-
-# Parse the environment variables from .env file
-export $(cat .env | grep -v ^# | xargs)
-
 # We want to filter domains which are in this file
 inputfile="filter_these_domains.txt"
 inputfile_uniq="filter_these_domains_unique.txt"
