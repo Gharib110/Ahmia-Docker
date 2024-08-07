@@ -35,6 +35,6 @@ RUN bash call_filtering.sh
 
 COPY dockercron /etc/cron.d/dockercron
 
-RUN chmod 777 /etc/cron.d/mycron
+RUN chmod 777 /etc/cron.d/dockercron
 
 CMD cron && tail -f /root/codes/crontab_filter.log
