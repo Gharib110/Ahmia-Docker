@@ -105,11 +105,11 @@ bash call_filtering.sh
 
 ```sh
 # Execute child abuse text filtering over the index every hour
-30 * * * * cd /home/juha/ahmia-index && bash wrap_filtering.sh > ./crontab_filter.log 2>&1
+30 * * * * cd /home/xxx/ahmia-index && bash wrap_filtering.sh > ./crontab_filter.log 2>&1
 # First of Each Month:
-10 04 01 * * cd /home/juha/ahmia-index && python point_to_indexes.py --add > ./add_alias.log 2>&1
+10 04 01 * * cd /home/xxx/ahmia-index && python point_to_indexes.py --add > ./add_alias.log 2>&1
 # On 6th of Each Month
-10 04 06 * * cd /home/juha/ahmia-index && python point_to_indexes.py --rm > ./remove_alias.log 2>&1
+10 04 06 * * cd /home/xxx/ahmia-index && python point_to_indexes.py --rm > ./remove_alias.log 2>&1
 ```
 
 ## Keep Elasticsearch running: autorestart
