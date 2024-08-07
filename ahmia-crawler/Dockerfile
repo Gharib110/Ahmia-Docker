@@ -29,5 +29,8 @@ WORKDIR /root/codes/
 
 RUN pip install -r requirements.txt
 
+COPY dockercron /etc/cron.d/dockercron
 
+RUN chmod 777 /etc/cron.d/dockercron
 
+CMD cron && tail -f /root/codes/crontab_filter.log
