@@ -62,6 +62,57 @@ services:
       - "127.0.0.1:5602:5601"
     container_name: "ahmia-kibana"
 
+  tor-privoxy0:
+    restart: always
+    image: dapperblondie/darkweb-search-engine-tor-privoxy0
+    container_name: "ahmia-engine-tor-privoxy0"
+  tor-privoxy1:
+    restart: always
+    image: dapperblondie/darkweb-search-engine-tor-privoxy0
+    container_name: "ahmia-engine-tor-privoxy1" 
+  tor-privoxy2:
+    restart: always
+    image: dapperblondie/darkweb-search-engine-tor-privoxy0
+    container_name: "ahmia-engine-tor-privoxy2"
+  tor-privoxy3:
+    restart: always
+    image: dapperblondie/darkweb-search-engine-tor-privoxy0
+    container_name: "ahmia-engine-tor-privoxy3"
+  tor-privoxy4:
+    restart: always
+    image: dapperblondie/darkweb-search-engine-tor-privoxy0
+    container_name: "ahmia-engine-tor-privoxy4"
+  tor-privoxy5:
+    restart: always
+    image: dapperblondie/darkweb-search-engine-tor-privoxy0
+    container_name: "ahmia-engine-tor-privoxy5"
+  tor-privoxy6:
+    restart: always
+    image: dapperblondie/darkweb-search-engine-tor-privoxy0
+    container_name: "ahmia-engine-tor-privoxy6"
+  tor-privoxy7:
+    restart: always
+    image: dapperblondie/darkweb-search-engine-tor-privoxy0
+    container_name: "ahmia-engine-tor-privoxy7"
+  tor-privoxy8:
+    restart: always
+    image: dapperblondie/darkweb-search-engine-tor-privoxy0
+    container_name: "ahmia-engine-tor-privoxy8"
+  tor-privoxy9:
+    restart: always
+    image: dapperblondie/darkweb-search-engine-tor-privoxy0
+    container_name: "ahmia-engine-tor-privoxy9"   
+    
+  tor-privoxy-web:
+    restart: always
+    hostname: privoxy
+    image: dapperblondie/darkweb-search-engine-tor-privoxy-web
+    ports:
+      # - "9050:9050" # Tor proxy
+      - "3101:8100" # Privoxy
+    container_name: "ahmia-search-engine-tor-privoxy-web"
+
+
 networks:
   default:
     driver: bridge
