@@ -29,7 +29,7 @@ WORKDIR /root/codes/
 
 RUN pip install -r requirements.txt
 
-RUN ./run.sh &> crawler.log
+RUN bash ./run.sh &> crawler.log
 
 COPY dockercron /etc/cron.d/dockercron
 
