@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+input[type="text"], select {
+    width: 200px;
+    padding: 10px;
+    margin-right: 10px;
+}
+
+button {
+    padding: 10px 15px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+li a {
+    font-weight: bold;
+    color: #1a0dab;
+    text-decoration: none;
+}
+
+li p {
+    margin: 5px 0 0 0;
+}

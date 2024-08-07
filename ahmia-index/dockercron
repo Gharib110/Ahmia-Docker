@@ -1,0 +1,6 @@
+# Execute child abuse text filtering over the index every hour
+30 * * * * cd /root/codes/ && bash wrap_filtering.sh > ./crontab_filter.log 2>&1
+# First of Each Month:
+10 04 01 * * cd /root/codes/ && python3 point_to_indexes.py --add > ./add_alias.log 2>&1
+# On 6th of Each Month
+10 04 06 * * cd /root/codes/ && python3 point_to_indexes.py --rm > ./remove_alias.log 2>&1

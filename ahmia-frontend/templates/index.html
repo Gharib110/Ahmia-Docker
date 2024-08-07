@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Search Engine</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Simple Search Engine</h1>
+    <form method="post" action="/">
+        <input type="text" name="query" placeholder="Enter search terms" value="{{ query }}">
+        <select name="year">
+            {% for y in range(2018, 2025) %}
+                <option value="{{ y }}" {% if y|string == year %}selected{% endif %}>{{ y }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Search</button>
+    </form>
+    
+    {% if results %}
+        <h2>Search Results</h2>
+        <ul>
+            {% for result in results %}
+                <li>
+                    <h3>{{ result._source.title }}</h3>
+                    <a href="{{ result._source.url }}">{{ result._source.url }}</a>
+                    <p><strong>Domain:</strong> {{ result._source.domain }}</p>
+                    <p><strong>Content:</strong> {{ result._source.content }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
