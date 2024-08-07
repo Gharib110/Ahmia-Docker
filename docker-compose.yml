@@ -1,0 +1,70 @@
+#Containers' name can't contain _ (underscore) because scrapy is not able to handle it.
+version: '3.2'
+
+services:
+  
+  elasticsearch1:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.14
+    restart: always
+    environment:
+     - cluster.name=docker-cluster
+     - node.name=ahmiaelasticsearch
+     - "ES_JAVA_OPTS=-Xmx2g -Xms2g"
+    #  - ELASTIC_PASSWORD=reZeP6crgHBGVsKeAFyWnduTzcwyB4qR
+    #  - xpack.monitoring.collection.enabled=true
+    #  - xpack.monitoring.exporters.remote.type=http
+    #  - xpack.monitoring.exporters.remote.host=monitor
+     - discovery.seed_hosts=ahmiaelasticsearch
+     - cluster.initial_master_nodes=ahmiaelasticsearch
+    #  - xpack.license.self_generated.type=basic
+     - xpack.security.enabled=false
+     - xpack.security.http.ssl.enabled=false
+    #  - xpack.security.http.ssl.key=$ELK_CERTS_DIR/elasticsearch1/elasticsearch1.key
+    #  - xpack.security.http.ssl.certificate_authorities=$ELK_CERTS_DIR/ca/ca.crt
+    #  - xpack.security.http.ssl.certificate=$ELK_CERTS_DIR/elasticsearch1/elasticsearch1.crt
+     - xpack.security.transport.ssl.enabled=false
+    #  - xpack.security.transport.ssl.verification_mode=certificate 
+    #  - xpack.security.transport.ssl.certificate_authorities=$ELK_CERTS_DIR/ca/ca.crt
+    #  - xpack.security.transport.ssl.certificate=$ELK_CERTS_DIR/elasticsearch1/elasticsearch1.crt
+    #  - xpack.security.transport.ssl.key=$ELK_CERTS_DIR/elasticsearch1/elasticsearch1.key
+     - indices.query.bool.max_clause_count=10240
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./data/elasticsearch1:/var/lib/elasticsearch/data
+      - ./elk-certs:$ELK_CERTS_DIR
+    ports:
+      - "127.0.0.1:9201:9200"
+    container_name: "ahmia-elasticsearch1"
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.14
+    restart: always
+    environment:
+     - ELASTICSEARCH_URL=http://ahmiaelasticsearch:9200
+     - ELASTICSEARCH_HOSTS=http://ahmiaelasticsearch:9200
+     - NODE_OPTIONS="--max-old-space-size=8192"  
+    #  - xpack.monitoring.ui.container.elasticsearch.enabled=true 
+    #  - xpack.security.transport.ssl.verification_mode=certificate  
+     - elasticsearch.requestTimeout=300000 
+     - elasticsearch.startupTimeout=500000  
+    #  - ELASTICSEARCH_USERNAME=
+    #  - ELASTICSEARCH_PASSWORD=
+    #  - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=$ELK_CERTS_DIR/ca/ca.crt
+    #  - SERVER_SSL_ENABLED=true
+    #  - SERVER_SSL_KEY=$ELK_CERTS_DIR/kibana/kibana.key
+    #  - SERVER_SSL_CERTIFICATE=$ELK_CERTS_DIR/kibana/kibana.crt
+    volumes:
+      - ./elk-certs:$ELK_CERTS_DIR
+    ports:
+      - "127.0.0.1:5602:5601"
+    container_name: "ahmia-kibana"
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.56.0/24
