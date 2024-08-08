@@ -1,7 +1,7 @@
 from decouple import config
 
 # The Base URL where Elasticsearch is deployed
-ES_HOST = config('ES_URL', default="http://172.16.56.12:9200/")
+ES_HOST = config('ES_URL', default="http://elasticsearch1:9200/")
 
 # The current ES index/alias that holds the onions.
 ES_TOR_INDEX = config('ES_TOR_INDEX', default="latest-tor")
