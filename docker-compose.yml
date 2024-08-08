@@ -6,9 +6,6 @@ services:
     image: dapperblondie/ahmia-index:1.0
     depends_on:
       - elasticsearch1
-    networks:
-      ahmia-network:
-        ipv4_address: 172.16.56.10
 
   ahmia-crawler:
     container_name: "ahmia-crawler"
@@ -26,9 +23,6 @@ services:
       - tor-privoxy7
       - tor-privoxy8
       - tor-privoxy9
-    networks:
-      ahmia-network:
-        ipv4_address: 172.16.56.11
 
   elasticsearch1:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.14.0
@@ -36,8 +30,8 @@ services:
     environment:
      - "ES_JAVA_OPTS=-Xmx2g -Xms2g"
      - network.host=0.0.0.0
-     - discovery.seed_hosts=172.16.56.12
-     - cluster.initial_master_nodes=172.16.56.12
+     - discovery.seed_hosts=elasticsearch1
+     - cluster.initial_master_nodes=elasticsearch1
      - indices.query.bool.max_clause_count=10240
      - xpack.security.enabled=false
      - xpack.security.http.ssl.enabled=false
@@ -51,16 +45,13 @@ services:
     ports:
       - "127.0.0.1:9201:9200"
     container_name: "ahmia-elasticsearch1"
-    networks:
-      ahmia-network:
-        ipv4_address: 172.16.56.12
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.14.0
     restart: always
     environment:
-     - ELASTICSEARCH_URL=http://172.16.56.12:9200
-     - ELASTICSEARCH_HOSTS=http://172.16.56.12:9200
+     - ELASTICSEARCH_URL=http://elasticsearch1:9200
+     - ELASTICSEARCH_HOSTS=http://elasticsearch1:9200
      - server.publicBaseUrl
      - NODE_OPTIONS="--max-old-space-size=8192"
      - elasticsearch.requestTimeout=300000 
@@ -72,9 +63,6 @@ services:
     ports:
       - "127.0.0.1:5602:5601"
     container_name: "ahmia-kibana"
-    networks:
-      ahmia-network:
-        ipv4_address: 172.16.56.13
 
   tor-privoxy0:
     restart: always
@@ -133,9 +121,7 @@ services:
     ports:
       - "127.0.0.1:3101:8100" # Privoxy
     container_name: "ahmia-search-engine-tor-privoxy-web"
-    networks:
-      ahmia-network:
-        ipv4_address: 172.16.56.24
+
 networks:
   ahmia-network:
     driver: bridge
