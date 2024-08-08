@@ -15,7 +15,7 @@ do
 
 	# Create a directory for each Tor instance if it doesn't exist
 	mkdir -p "./torfleet/data/tor/tor$i"
-	nohup tor --CookieAuthentication 0 --HashedControlPassword "" --ControlPort 0 --ControlSocket 0 --ClientOnly 1 --NewCircuitPeriod 15 --MaxCircuitDirtiness 15 --NumEntryGuards 8 --PidFile ./torfleet/pids/tor$i.pid --SocksPort 127.0.0.1:$socks_port --Log "warn file ./log/warnings.log" --Log "err file ./log/errors.log" --DataDirectory ./torfleet/data/tor/tor$i > ./torfleet/log/tor_$i.log 2>&1 &
+	nohup tor --CookieAuthentication 0 --HashedControlPassword "" --ControlPort 0 --ControlSocket 0 --ClientOnly 1 --NewCircuitPeriod 15 --MaxCircuitDirtiness 15 --NumEntryGuards 8 --PidFile ./torfleet/pids/tor$i.pid --SocksPort 127.0.0.1:$socks_port --Log "warn file ./torfleet/log/warnings.log" --Log "err file ./torfleet/log/errors.log" --DataDirectory ./torfleet/data/tor/tor$i > ./torfleet/log/tor_$i.log 2>&1 &
 	sleep 1
 
 	# Prepare Privoxy configuration for this instance
