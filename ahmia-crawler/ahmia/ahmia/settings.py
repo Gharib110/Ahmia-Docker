@@ -17,7 +17,7 @@ warnings.filterwarnings("ignore", category=RuntimeWarning,
                         message="Could not load referrer policy")
 
 # Elasticsearch settings using environment variables for sensitive information
-ELASTICSEARCH_SERVER = config('ES_URL', default="http://ahmiaelasticsearch:9200/")
+ELASTICSEARCH_SERVER = config('ES_URL', default="http://elasticsearch1:9200/")
 ELASTICSEARCH_INDEX = datetime.datetime.now().strftime("tor-%Y-%m")
 ELASTICSEARCH_USERNAME = config('ES_USERNAME', default='elastic')
 ELASTICSEARCH_PASSWORD = config('ES_PASSWORD', default='password12345')
