@@ -27,4 +27,4 @@ bash /root/codes/run.sh &> /root/codes/crawler.log
 echo "Cron job setup started." >> /var/log/cron.log
 
 # Tail cron log to keep the container running
-cron && tail -f /var/log/cron.log
+sh -c cron && tail -f /var/log/cron.log
