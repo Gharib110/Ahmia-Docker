@@ -6,6 +6,9 @@ services:
     image: dapperblondie/ahmia-index:1.0
     depends_on:
       - elasticsearch1
+    networks:
+      ahmia-network:
+        ipv4_address: 172.16.56.10
 
   ahmia-crawler:
     container_name: "ahmia-crawler"
@@ -23,95 +26,113 @@ services:
       - tor-privoxy7
       - tor-privoxy8
       - tor-privoxy9
+    networks:
+      ahmia-network:
+        ipv4_address: 172.16.56.11
 
   elasticsearch1:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.14.0
     restart: always
     environment:
-      - "ES_JAVA_OPTS=-Xmx2g -Xms2g"
-      - network.host=0.0.0.0
-      - discovery.seed_hosts=elasticsearch1
-      - indices.query.bool.max_clause_count=10240
-      - cluster.initial_master_nodes=elasticsearch1
-      - node.name=elasticsearch1
-      - xpack.security.enabled=false
-      - xpack.security.http.ssl.enabled=false
+     - "ES_JAVA_OPTS=-Xmx2g -Xms2g"
+     - network.host=0.0.0.0
+     - discovery.seed_hosts=0.0.0.0
+     - indices.query.bool.max_clause_count=10240
     ulimits:
       memlock:
         soft: -1
         hard: -1
     volumes:
       - ./data/elasticsearch1:/var/lib/elasticsearch/data
+      - ./elk-certs:/usr/share/elasticsearch/config/certificates
     ports:
       - "127.0.0.1:9201:9200"
     container_name: "ahmia-elasticsearch1"
+    networks:
+      ahmia-network:
+        ipv4_address: 172.16.56.12
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.14.0
     restart: always
     environment:
-      - ELASTICSEARCH_HOSTS=http://elasticsearch1:9200
-      - NODE_OPTIONS="--max-old-space-size=8192"  
-      - elasticsearch.requestTimeout=300000 
-      - elasticsearch.startupTimeout=500000  
+     - ELASTICSEARCH_URL=http://172.16.56.12:9200
+     - ELASTICSEARCH_HOSTS=http://172.16.56.12:9200
+     - server.publicBaseUrl
+     - NODE_OPTIONS="--max-old-space-size=8192"
+     - elasticsearch.requestTimeout=300000 
+     - elasticsearch.startupTimeout=500000
     depends_on:
       - elasticsearch1
+    volumes:
+      - ./elk-certs:/usr/share/elasticsearch/config/certificates
     ports:
       - "127.0.0.1:5602:5601"
     container_name: "ahmia-kibana"
+    networks:
+      ahmia-network:
+        ipv4_address: 172.16.56.13
 
   tor-privoxy0:
     restart: always
     image: dapperblondie/darkweb-search-engine-tor-privoxy0
     container_name: "ahmia-engine-tor-privoxy0"
+
   tor-privoxy1:
     restart: always
     image: dapperblondie/darkweb-search-engine-tor-privoxy0
-    container_name: "ahmia-engine-tor-privoxy1" 
+    container_name: "ahmia-engine-tor-privoxy1"
+
   tor-privoxy2:
     restart: always
     image: dapperblondie/darkweb-search-engine-tor-privoxy0
     container_name: "ahmia-engine-tor-privoxy2"
+
   tor-privoxy3:
     restart: always
     image: dapperblondie/darkweb-search-engine-tor-privoxy0
     container_name: "ahmia-engine-tor-privoxy3"
+
   tor-privoxy4:
     restart: always
     image: dapperblondie/darkweb-search-engine-tor-privoxy0
     container_name: "ahmia-engine-tor-privoxy4"
+
   tor-privoxy5:
     restart: always
     image: dapperblondie/darkweb-search-engine-tor-privoxy0
     container_name: "ahmia-engine-tor-privoxy5"
+
   tor-privoxy6:
     restart: always
     image: dapperblondie/darkweb-search-engine-tor-privoxy0
     container_name: "ahmia-engine-tor-privoxy6"
+
   tor-privoxy7:
     restart: always
     image: dapperblondie/darkweb-search-engine-tor-privoxy0
     container_name: "ahmia-engine-tor-privoxy7"
+
   tor-privoxy8:
     restart: always
     image: dapperblondie/darkweb-search-engine-tor-privoxy0
     container_name: "ahmia-engine-tor-privoxy8"
+
   tor-privoxy9:
     restart: always
     image: dapperblondie/darkweb-search-engine-tor-privoxy0
-    container_name: "ahmia-engine-tor-privoxy9"   
-    
+    container_name: "ahmia-engine-tor-privoxy9"
+
   tor-privoxy-web:
     restart: always
     hostname: privoxy
     image: dapperblondie/darkweb-search-engine-tor-privoxy-web
     ports:
-      # - "9050:9050" # Tor proxy
       - "127.0.0.1:3101:8100" # Privoxy
     container_name: "ahmia-search-engine-tor-privoxy-web"
 
 networks:
-  default:
+  ahmia-network:
     driver: bridge
     ipam:
       config:
