@@ -26,7 +26,7 @@ COPY . /root/codes/
 
 # Set environment variables
 ENV ES_TOR_INDEX=latest-tor
-ENV ES_URL=http://172.16.56.12:9200/
+ENV ES_URL=http://elasticsearch1:9200/
 
 # Set working directory
 WORKDIR /root/codes/
