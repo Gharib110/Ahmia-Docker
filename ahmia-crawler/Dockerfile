@@ -2,6 +2,7 @@ FROM ubuntu:22.04
 
 USER root
 
+# Install necessary packages
 RUN apt-get update && apt-get -y install \
   python3-pip \
   python3-dev \
@@ -19,22 +20,29 @@ RUN apt-get update && apt-get -y install \
   coreutils \
   cron
 
+# Create directory for the application
 RUN mkdir -p /root/codes/
 COPY . /root/codes/
 
+# Set environment variables
 ENV ES_TOR_INDEX=latest-tor
-ENV ES_URL=http://ahmiaelasticsearch:9200/
+ENV ES_URL=http://elasticsearch1:9200/
 
+# Set working directory
 WORKDIR /root/codes/
 
+# Install Python dependencies
 RUN pip3 install -r requirements.txt
 
+# Make shell scripts executable
 RUN chmod +x ./*.sh
 
-RUN bash ./run.sh &> crawler.log
-
+# Set up cron jobs
 COPY dockercron /etc/cron.d/dockercron
-
 RUN chmod 644 /etc/cron.d/dockercron
 
-CMD ["cron", "&&", "tail -f /var/log/cron.log"]
+# Ensure cron logs go to a log file
+RUN touch /var/log/cron.log
+
+# Start the startup script
+ENTRYPOINT ["/root/codes/startup.sh"]
