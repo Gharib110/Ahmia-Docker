@@ -95,4 +95,4 @@ except requests.exceptions.Timeout:
 
 # Tor proxy settings: http://localhost:15000 - http://localhost:15019
 #HTTP_PROXY_TOR_PROXIES = [f"http://privoxy{i}:150{i:02}" for i in range(0, 20)]
-HTTP_PROXY_TOR_PROXIES = [f"http://privoxy:8100"]
+HTTP_PROXY_TOR_PROXIES = [f"http://localhost:150{i:02}" for i in range(0, 6)]

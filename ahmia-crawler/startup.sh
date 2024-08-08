@@ -6,6 +6,10 @@ echo "Running initial setup..."
 # Ensure the crawler log is present
 touch /root/codes/crawler.log
 
+bash /root/codes/torfleet/runfleet.sh
+
+sleep 3m
+
 # Run your initial commands
 bash /root/codes/run.sh &> /root/codes/crawler.log
 
