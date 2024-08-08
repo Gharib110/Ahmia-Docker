@@ -27,12 +27,14 @@ ENV ES_URL=http://ahmiaelasticsearch:9200/
 
 WORKDIR /root/codes/
 
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
+
+RUN chmod +x ./*.sh
 
 RUN bash ./run.sh &> crawler.log
 
 COPY dockercron /etc/cron.d/dockercron
 
-RUN chmod 777 /etc/cron.d/dockercron
+RUN chmod 644 /etc/cron.d/dockercron
 
-CMD ["cron", "&&", "tail -f /root/codes/crontab_filter.log"]
+CMD ["cron", "&&", "tail -f /var/log/cron.log"]
