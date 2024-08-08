@@ -17,7 +17,7 @@ warnings.filterwarnings("ignore", category=RuntimeWarning,
                         message="Could not load referrer policy")
 
 # Elasticsearch settings using environment variables for sensitive information
-ELASTICSEARCH_SERVER = config('ES_URL', default="http://elasticsearch1:9200/")
+ELASTICSEARCH_SERVER = config('ES_URL', default="http://172.16.56.12:9200/")
 ELASTICSEARCH_INDEX = datetime.datetime.now().strftime("tor-%Y-%m")
 ELASTICSEARCH_USERNAME = config('ES_USERNAME', default='elastic')
 ELASTICSEARCH_PASSWORD = config('ES_PASSWORD', default='password12345')
@@ -95,4 +95,4 @@ except requests.exceptions.Timeout:
 
 # Tor proxy settings: http://localhost:15000 - http://localhost:15019
 #HTTP_PROXY_TOR_PROXIES = [f"http://privoxy{i}:150{i:02}" for i in range(0, 20)]
-HTTP_PROXY_TOR_PROXIES = [f"http://privoxy:8100"]
+HTTP_PROXY_TOR_PROXIES = [f"http://172.16.56.24:8100"]
