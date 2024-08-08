@@ -3,13 +3,13 @@ version: '3.2'
 services:
   ahmia-index:
     container_name: "ahmia-index"
-    image: dapperblondie/ahmia-index:4.0
+    image: dapperblondie/ahmia-index:5.0
     depends_on:
       - elasticsearch1
 
   ahmia-crawler:
     container_name: "ahmia-crawler"
-    image: dapperblondie/ahmia-crawler:4.0
+    image: dapperblondie/ahmia-crawler:5.0
     depends_on:
       - ahmia-index
 
