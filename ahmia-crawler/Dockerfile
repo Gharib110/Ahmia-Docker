@@ -20,7 +20,7 @@ RUN apt-get update && apt-get -y install \
   coreutils \
   cron \
   privoxy \
-  apt-transport-https \
+  apt-transport-https
 
 # Create directory for the application
 RUN mkdir -p /root/codes/
