@@ -130,7 +130,9 @@ services:
     ports:
       - "127.0.0.1:3101:8100" # Privoxy
     container_name: "ahmia-search-engine-tor-privoxy-web"
-
+    networks:
+      ahmia-network:
+        ipv4_address: 172.16.56.24
 networks:
   ahmia-network:
     driver: bridge
