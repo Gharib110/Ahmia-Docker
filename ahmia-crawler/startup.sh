@@ -6,6 +6,15 @@ echo "Running initial setup..."
 # Ensure the crawler log is present
 touch /root/codes/crawler.log
 
+# Wait for Elasticsearch to be available
+echo "Waiting for Elasticsearch to be available..."
+while ! curl -s http://elasticsearch1:9200/_cluster/health | grep -E '"status":"(green|yellow)"' > /dev/null; do
+  echo "Elasticsearch not available yet. Waiting..."
+  sleep 5  # Wait for 5 seconds before checking again
+done
+
+echo "Elasticsearch is up and running!"
+
 bash /root/codes/torfleet/runfleet.sh
 
 sleep 3m
