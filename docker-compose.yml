@@ -36,8 +36,11 @@ services:
     environment:
      - "ES_JAVA_OPTS=-Xmx2g -Xms2g"
      - network.host=0.0.0.0
-     - discovery.seed_hosts=0.0.0.0
+     - discovery.seed_hosts=172.16.56.12
+     - cluster.initial_master_nodes=172.16.56.12
      - indices.query.bool.max_clause_count=10240
+     - xpack.security.enabled=false
+     - xpack.security.http.ssl.enabled=false
     ulimits:
       memlock:
         soft: -1
