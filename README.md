@@ -4,3 +4,5 @@ Ahmia Crawler and Index Dockerized
 - I prepared 5 tor instance instead of 100 instance with tor fleet
 - Everything is ready, use the docker-compose file
 - The ahmia-frontend docker container is not ready yet
+## Thanks
+[Ahmia.fi](https://github.com/ahmia/)
